@@ -1,3 +1,7 @@
+/**
+ * This class will contain methods that will help the application to store/fetch data 
+ * in/from local storage
+ */
 import { Injectable } from '@angular/core';
 
 @Injectable({

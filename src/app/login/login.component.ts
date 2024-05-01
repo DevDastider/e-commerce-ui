@@ -17,6 +17,7 @@ export class LoginComponent {
     private router: Router){
 
   }
+  
   login(loginForm:NgForm){
     console.log("Form is submitted");
     console.log(loginForm.value)
