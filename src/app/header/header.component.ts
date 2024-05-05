@@ -24,4 +24,13 @@ export class HeaderComponent {
     this.userAuthService.clear();
     this.router.navigate(['']);
   }
+
+  public isAdmin(): boolean{
+    return this.userAuthService.isAdmin();
+  }
+
+  public isUser(): boolean{
+    return this.userAuthService.isUser();
+  }
+
 }

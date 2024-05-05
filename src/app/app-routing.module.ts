@@ -6,6 +6,7 @@ import { UserComponent } from './user/user.component';
 import { LoginComponent } from './login/login.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { AuthGuard } from './_auth/auth.guard';
+import { AddNewProductComponent } from './add-new-product/add-new-product.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: 'user', component: UserComponent, canActivate: [AuthGuard], data: {roles: ['user']}},
   {path: 'login', component: LoginComponent},
   {path: 'forbidden', component: ForbiddenComponent},
+  {path: 'addNewProduct', component: AddNewProductComponent}
 ];
 
 @NgModule({
