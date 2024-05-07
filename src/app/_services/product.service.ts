@@ -11,7 +11,7 @@ export class ProductService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public addProduct(product: Product){
+  public addProduct(product: FormData){
     return this.httpClient.post<Product>(this.HOST_SERVER_PATH + "/addProduct", product);
   }
 }

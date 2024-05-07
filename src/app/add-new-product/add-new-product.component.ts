@@ -4,6 +4,8 @@ import { NgForm } from '@angular/forms';
 import { ProductService } from '../_services/product.service';
 import { error } from 'console';
 import { HttpErrorResponse } from '@angular/common/http';
+import { FileHandle } from '../_model/file-handle.model';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-add-new-product',
@@ -13,18 +15,21 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class AddNewProductComponent {
 
 
-  constructor(private productService: ProductService){}
+  constructor(private productService: ProductService, private sanitizer: DomSanitizer){}
 
   product:Product = {
     productName: "",
     productDescription: "",
     productDiscountedPrice: 0,
-    productActualPrice: 0
+    productActualPrice: 0,
+    productImages: []
   }
 
   addProduct(productForm: NgForm){
     console.log(this.product);
-    this.productService.addProduct(this.product).subscribe(
+
+    let formData = this.prepareFormData(this.product);
+    this.productService.addProduct(formData).subscribe(
       (response: Product) => {
         console.log(response);
         productForm.reset();
@@ -35,5 +40,41 @@ export class AddNewProductComponent {
     )
   }
 
-  
+  prepareFormData(product: Product): FormData{
+    const formData = new FormData();
+
+    formData.append(
+      'product',
+      new Blob([JSON.stringify(product)], {type: 'application/json'})
+    );
+    for(var i=0; i<product.productImages.length; i++){
+      formData.append(
+        'imageFiles',
+        product.productImages[i].file,
+        product.productImages[i].file.name
+      );
+    }
+
+    return formData;
+  }
+
+  // resetForm(){
+  //   // this.product = new Product();
+  // }
+
+  onFileSelected(event: any){
+    console.log(event);
+    if(event.target.files){
+      const file = event.target.files[0];
+      const fileHandle: FileHandle = {
+        file: file,
+        url: this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(file))
+      }
+      this.product.productImages.push(fileHandle);
+    }
+  }
+
+  removeImages(index: number){
+    this.product.productImages.splice(index, 1);
+  }
 }
