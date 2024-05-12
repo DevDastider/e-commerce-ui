@@ -18,6 +18,7 @@ export class AddNewProductComponent {
   constructor(private productService: ProductService, private sanitizer: DomSanitizer){}
 
   product:Product = {
+    productNumber: null,
     productName: "",
     productDescription: "",
     productDiscountedPrice: 0,
@@ -33,6 +34,7 @@ export class AddNewProductComponent {
       (response: Product) => {
         console.log(response);
         productForm.reset();
+        this.product.productImages = [];
       },
       (error: HttpErrorResponse)=>{
         console.log(error);
@@ -76,5 +78,9 @@ export class AddNewProductComponent {
 
   removeImages(index: number){
     this.product.productImages.splice(index, 1);
+  }
+
+  fileDropped(fileHandle: FileHandle){
+    this.product.productImages.push(fileHandle);
   }
 }
