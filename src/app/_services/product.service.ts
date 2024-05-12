@@ -22,4 +22,8 @@ export class ProductService {
   public deleteProduct(productNumber: Number){
     return this.httpClient.delete(this.HOST_SERVER_PATH + "/deleteProductDetails/" + productNumber);
   }
+
+  public getProductById(productNumber: string){
+    return this.httpClient.get<Product>(this.HOST_SERVER_PATH + "/getProductDetailsById/" + productNumber);
+  }
 }
