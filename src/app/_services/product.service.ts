@@ -14,4 +14,12 @@ export class ProductService {
   public addProduct(product: FormData){
     return this.httpClient.post<Product>(this.HOST_SERVER_PATH + "/addProduct", product);
   }
+
+  public getAllProducts(){
+    return this.httpClient.get<Product[]>(this.HOST_SERVER_PATH + "/getAllProducts");
+  }
+
+  public deleteProduct(productNumber: Number){
+    return this.httpClient.delete(this.HOST_SERVER_PATH + "/deleteProductDetails/" + productNumber);
+  }
 }
