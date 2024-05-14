@@ -16,9 +16,11 @@ export class UserAuthService {
   }
 
   public getRoles(): []{
-    var roleInStorage = localStorage.getItem('roles');
-    if(roleInStorage!=null){
-      return JSON.parse(roleInStorage);
+    if (typeof localStorage !== 'undefined') {
+      var roleInStorage = localStorage.getItem('roles');
+      if(roleInStorage!=null){
+        return JSON.parse(roleInStorage);
+      }
     }
     return [];
   }
@@ -28,9 +30,11 @@ export class UserAuthService {
   }
 
   public getToken(): string{
-    var jwtToken = localStorage.getItem('jwtToken');
-    if(jwtToken!=null){
-      return jwtToken;
+    if (typeof localStorage !== 'undefined') {
+      var jwtToken = localStorage.getItem('jwtToken');
+      if(jwtToken!=null){
+        return jwtToken;
+      }
     }
     return '';
   }
