@@ -10,7 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { HeaderComponent } from './header/header.component';
 import { FormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AuthInterceptor } from './_auth/auth.interceptor';
 import { UserService } from './_services/user.service';
@@ -59,6 +59,7 @@ import { ShowProductImagesDialogComponent } from './show-product-images-dialog/s
     MatDialogModule
   ],
   providers: [
+    provideHttpClient(withFetch()),
     provideClientHydration(),
     AuthGuard,
     {

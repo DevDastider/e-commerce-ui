@@ -23,7 +23,7 @@ export class ShowProductDetailsComponent implements OnInit{
   ){}
   
   productDetails: Product[] = [];
-  displayedColumns: string[] = ['Id', 'Product Name', 'Product Description', 'Product Discounted Price', 'Product Actual Price', 'Images', 'Edit', 'Delete']; 
+  displayedColumns: string[] = ['Id', 'Product Name', 'description', 'Product Discounted Price', 'Product Actual Price', 'More']; 
 
   ngOnInit(): void {
     this.getAllProducts();
