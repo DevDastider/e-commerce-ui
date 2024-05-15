@@ -23,7 +23,7 @@ export class ProductViewDetailsComponent implements OnInit{
   selectedProductImageIndex = 0;
 
   ngOnInit(): void {
-    this.product = this.activatedRoute.snapshot.data['poduct'];
+    this.product = this.activatedRoute.snapshot.data['product'];
     console.log(this.product);
   }
 
