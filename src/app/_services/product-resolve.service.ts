@@ -10,7 +10,9 @@ import { ImageProcessingService } from './image-processing.service';
 })
 export class ProductResolveService implements Resolve<Product>{
 
-  constructor(private productService: ProductService, private imageProcessingService: ImageProcessingService) { }
+  constructor(
+    private productService: ProductService, 
+    private imageProcessingService: ImageProcessingService) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Product> {
     const productNumber = route.paramMap.get("productNumber");
