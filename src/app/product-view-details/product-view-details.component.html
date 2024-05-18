@@ -25,7 +25,7 @@
                     <p style="text-decoration: line-through;">Rs. {{product.productActualPrice}}</p>
                 </div>
                 <div class="mt-5">
-                    <button mat-raised-button color="warn" style="width: 200px;">Buy Now</button>
+                    <button mat-raised-button color="warn" style="width: 200px;" (click)="buyProduct(product.productNumber)">Buy Now</button>
                 </div>
             </div>
         </div>

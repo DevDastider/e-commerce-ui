@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../_model/product.model';
 
 @Component({
@@ -9,7 +9,7 @@ import { Product } from '../_model/product.model';
 })
 export class ProductViewDetailsComponent implements OnInit{
 
-  constructor(private activatedRoute: ActivatedRoute){}
+  constructor(private activatedRoute: ActivatedRoute, private router: Router){}
 
   product: Product = {
     productNumber: undefined,
@@ -29,5 +29,11 @@ export class ProductViewDetailsComponent implements OnInit{
 
   public changeIndex(index: number){
     this.selectedProductImageIndex = index;
+  }
+
+  public buyProduct(productNumber: string){
+    this.router.navigate(['/buyProduct', {
+      isSingleProductCheckout: true, id: productNumber
+    }]);
   }
 }
