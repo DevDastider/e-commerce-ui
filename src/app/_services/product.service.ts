@@ -29,7 +29,7 @@ export class ProductService {
   }
 
   public getProductDetails(isSingleProductCheckout:boolean, productNumber:string){
-    return this.httpClient.get<Product[]>(this.HOST_SERVER_PATH + isSingleProductCheckout + "/" + productNumber);
+    return this.httpClient.get<Product[]>(this.HOST_SERVER_PATH + 'getProductDetails/' + isSingleProductCheckout + "/" + productNumber);
   }
 
   public placeOrder(orderDetails: OrderDetails){
