@@ -13,6 +13,7 @@ import { ProductViewDetailsComponent } from './product-view-details/product-view
 import { BuyProductComponent } from './buy-product/buy-product.component';
 import { BuyProductResolveService } from './_services/buy-product-resolve.service';
 import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';
+import { RegisterUserComponent } from './register-user/register-user.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -28,7 +29,8 @@ const routes: Routes = [
   { path: 'showProductDetails', component: ShowProductDetailsComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
   { path: 'productViewDetails', component: ProductViewDetailsComponent, resolve: { product: ProductResolveService } },
   { path: 'buyProduct', component: BuyProductComponent, canActivate: [AuthGuard], data: { roles: ['user'] }, resolve: { productDetails: BuyProductResolveService } },
-  { path: 'orderConfirm', component: OrderConfirmationComponent, canActivate: [AuthGuard], data: { roles: ['user'] } }
+  { path: 'orderConfirm', component: OrderConfirmationComponent, canActivate: [AuthGuard], data: { roles: ['user'] } },
+  {path: 'register', component: RegisterUserComponent}
 ];
 
 @NgModule({
