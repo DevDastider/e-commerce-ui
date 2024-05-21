@@ -29,8 +29,8 @@ export class HomeComponent implements OnInit{
     this.getAllProducts();
   }
 
-  public getAllProducts(){
-    this.productService.getAllProducts(this.pageNumber)
+  public getAllProducts(searchKey: string = ""){
+    this.productService.getAllProducts(this.pageNumber, searchKey)
     .pipe(
       map((x:Product[],i)=> x.map((product: Product) => {
         product.productImages = this.imageProcessingService.convertByteToImages(product.productImages);
@@ -40,8 +40,8 @@ export class HomeComponent implements OnInit{
     .subscribe({
       next: (resp: Product[])=>{
         console.log(resp);
+        resp.forEach(product=> this.productDetails.push(product));
         if(resp.length==10){
-          resp.forEach(product=> this.productDetails.push(product));
           this.showLoadButton = true;
         } else{
           this.showLoadButton = false;
@@ -61,5 +61,11 @@ export class HomeComponent implements OnInit{
   public loadMoreProduct(){
     this.pageNumber += 1;
     this.getAllProducts();
+  }
+
+  public searchByKeyword(searchKeyword: string){
+    this.pageNumber = 0;
+    this.productDetails = [];
+    this.getAllProducts(searchKeyword);
   }
 }
