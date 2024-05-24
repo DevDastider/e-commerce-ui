@@ -35,4 +35,8 @@ export class ProductService {
   public placeOrder(orderDetails: OrderDetails){
     return this.httpClient.post(this.HOST_SERVER_PATH + "placeOrder", orderDetails);
   }
+
+  public addToCart(productNumber: string){
+    return this.httpClient.get(this.HOST_SERVER_PATH + "addToCart/" + productNumber);
+  }
 }

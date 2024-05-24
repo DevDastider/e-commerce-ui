@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../_model/product.model';
+import { ProductService } from '../_services/product.service';
+import { error } from 'console';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-product-view-details',
@@ -9,7 +12,7 @@ import { Product } from '../_model/product.model';
 })
 export class ProductViewDetailsComponent implements OnInit{
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router){}
+  constructor(private activatedRoute: ActivatedRoute, private router: Router, private productService: ProductService){}
 
   product: Product = {
     productNumber: undefined,
@@ -35,5 +38,12 @@ export class ProductViewDetailsComponent implements OnInit{
     this.router.navigate(['/buyProduct', {
       isSingleProductCheckout: true, id: productNumber
     }]);
+  }
+
+  public addToCart(productNumber: string){
+    this.productService.addToCart(productNumber).subscribe({
+      complete: ()=> console.log('Added to cart'),
+      error: (e: HttpErrorResponse)=> console.log(e)
+    });
   }
 }
