@@ -39,4 +39,8 @@ export class ProductService {
   public addToCart(productNumber: string){
     return this.httpClient.get(this.HOST_SERVER_PATH + "addToCart/" + productNumber);
   }
+
+  public getCartDetails(){
+    return this.httpClient.get(this.HOST_SERVER_PATH + "getCartDetails");
+  }
 }
