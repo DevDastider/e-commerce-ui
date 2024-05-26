@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../_services/product.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -9,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class CartComponent implements OnInit{
 
-  constructor(private productService: ProductService){}
+  constructor(private productService: ProductService, private router: Router){}
 
   displayedColumns: string[] = ['Name', 'Description', 'Price', 'Discounted Price'];
   cartDetails: any[] = [];
@@ -28,5 +29,11 @@ export class CartComponent implements OnInit{
         error: (e: HttpErrorResponse)=> console.log(e)
       }
     )
+  }
+
+  public checkoutCart(){
+    this.router.navigate(['/buyProduct', {
+      isSingleProductCheckout: true, id: '0'
+    }]);
   }
 }

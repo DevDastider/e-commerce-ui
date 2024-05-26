@@ -13,10 +13,17 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class BuyProductComponent implements OnInit{
   
-  constructor(private activatedRoute: ActivatedRoute, private productService: ProductService, private router: Router){}
+  constructor(
+    private activatedRoute: ActivatedRoute, 
+    private productService: ProductService, 
+    private router: Router
+  ){}
   
+  isSingleProductCheckout: string|null = '';
+
   ngOnInit(): void {
     this.productDetails = this.activatedRoute.snapshot.data['productDetails'];
+    this.isSingleProductCheckout = this.activatedRoute.snapshot.paramMap.get("isSingleProductCheckout");
 
     this.productDetails.forEach(
       x => this.orderDetails.orderProductQuantityList.push(
@@ -38,7 +45,10 @@ export class BuyProductComponent implements OnInit{
   };
 
   public placeOrder(orderForm: NgForm){
-    this.productService.placeOrder(this.orderDetails).subscribe({
+    let isCartCheckout = (this.isSingleProductCheckout) && 
+                                      this.isSingleProductCheckout === 'true' ? false : true;
+    
+    this.productService.placeOrder(this.orderDetails, isCartCheckout).subscribe({
       next: (resp)=> {
         console.log(resp);
         orderForm.reset();
