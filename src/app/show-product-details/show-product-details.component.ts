@@ -24,13 +24,17 @@ export class ShowProductDetailsComponent implements OnInit{
   
   productDetails: Product[] = [];
   displayedColumns: string[] = ['Id', 'Product Name', 'description', 'Product Discounted Price', 'Product Actual Price', 'More']; 
+  pageNumber: number = 0;
+  showTable: boolean = false;
+  showLoadButton: boolean = false;
 
   ngOnInit(): void {
     this.getAllProducts();
   }
 
-  public getAllProducts(){
-    this.productService.getAllProducts()
+  public getAllProducts(searchKey: string = ""){
+    this.showTable = false;
+    this.productService.getAllProducts(this.pageNumber, searchKey)
     .pipe(
       map((x:Product[],i)=> x.map((product: Product) => {
         product.productImages = this.imageProcessingService.convertByteToImages(product.productImages);
@@ -40,7 +44,13 @@ export class ShowProductDetailsComponent implements OnInit{
     .subscribe(
       (resp: Product[])  => {
         console.log(resp);
-        this.productDetails = resp;
+        resp.forEach(product=> this.productDetails.push(product));
+        this.showTable = true;
+        if (resp.length == 10){
+          this.showLoadButton = true;
+        } else{
+          this.showLoadButton = false;
+        }
       },
       (error: HttpErrorResponse)=>{
         console.log(error);
@@ -70,5 +80,16 @@ export class ShowProductDetailsComponent implements OnInit{
 
   public editProductDetails(productNumber: number){
     this.router.navigate(['/addNewProduct', {productNumber: productNumber}]);
+  }
+
+  public loadMoreProduct(){
+    this.pageNumber += 1;
+    this.getAllProducts();
+  }
+
+  public searchByKeyword(searchKeyword: string){
+    this.pageNumber = 0;
+    this.productDetails = [];
+    this.getAllProducts(searchKeyword);
   }
 }

@@ -28,6 +28,10 @@ export class UserService {
     return this.httpClient.post(this.HOST_SERVER_PATH + "/authenticate", loginData, { headers: this.noAuthHeader })
   }
 
+  public registerUser(registerData: any){
+    return this.httpClient.post(this.HOST_SERVER_PATH + "/registerNewUser", registerData);
+  }
+
   /**
    * This method will match roles between a role of user and role required to visit a page
    * 

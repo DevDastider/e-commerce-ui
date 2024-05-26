@@ -29,6 +29,10 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDialogModule} from '@angular/material/dialog';
 import { ShowProductImagesDialogComponent } from './show-product-images-dialog/show-product-images-dialog.component';
 import { ProductViewDetailsComponent } from './product-view-details/product-view-details.component';
+import { BuyProductComponent } from './buy-product/buy-product.component';
+import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';
+import { RegisterUserComponent } from './register-user/register-user.component';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +47,11 @@ import { ProductViewDetailsComponent } from './product-view-details/product-view
     DragDirective,
     ShowProductDetailsComponent,
     ShowProductImagesDialogComponent,
-    ProductViewDetailsComponent
+    ProductViewDetailsComponent,
+    BuyProductComponent,
+    OrderConfirmationComponent,
+    RegisterUserComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
