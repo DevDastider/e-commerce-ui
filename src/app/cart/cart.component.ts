@@ -12,7 +12,7 @@ export class CartComponent implements OnInit{
 
   constructor(private productService: ProductService, private router: Router){}
 
-  displayedColumns: string[] = ['Name', 'Description', 'Price', 'Discounted Price'];
+  displayedColumns: string[] = ['Name', 'Description', 'Price', 'Discounted Price', 'Action'];
   cartDetails: any[] = [];
   
   ngOnInit(): void {
@@ -33,7 +33,14 @@ export class CartComponent implements OnInit{
 
   public checkoutCart(){
     this.router.navigate(['/buyProduct', {
-      isSingleProductCheckout: true, id: '0'
+      isSingleProductCheckout: false, id: '0'
     }]);
+  }
+
+  public deleteItem(cartId: string){
+    this.productService.deleteCartItem(cartId).subscribe({
+      complete: ()=> this.getCartDetails(),
+      error: (e: HttpErrorResponse)=> console.log(e)            
+    })
   }
 }
