@@ -32,7 +32,19 @@ export class ProductService {
     return this.httpClient.get<Product[]>(this.HOST_SERVER_PATH + 'getProductDetails/' + isSingleProductCheckout + "/" + productNumber);
   }
 
-  public placeOrder(orderDetails: OrderDetails){
-    return this.httpClient.post(this.HOST_SERVER_PATH + "placeOrder", orderDetails);
+  public placeOrder(orderDetails: OrderDetails, isCartCheckout: boolean){
+    return this.httpClient.post(this.HOST_SERVER_PATH + "placeOrder/" + isCartCheckout, orderDetails);
+  }
+
+  public addToCart(productNumber: string){
+    return this.httpClient.get(this.HOST_SERVER_PATH + "addToCart/" + productNumber);
+  }
+
+  public getCartDetails(){
+    return this.httpClient.get(this.HOST_SERVER_PATH + "getCartDetails");
+  }
+
+  public deleteCartItem(cartId: string){
+    return this.httpClient.delete(this.HOST_SERVER_PATH + 'deleteCartItem/' + cartId);
   }
 }
