@@ -54,8 +54,8 @@ export class ProductService {
     return this.httpClient.get<MyOrderDetails[]>(this.HOST_SERVER_PATH + 'getOrderDetails');
   }
 
-  public getAllOrderDetails(): Observable<MyOrderDetails[]>{
-    return this.httpClient.get<MyOrderDetails[]>(this.HOST_SERVER_PATH + 'getAllOrderDetails');
+  public getAllOrderDetails(status: string): Observable<MyOrderDetails[]>{
+    return this.httpClient.get<MyOrderDetails[]>(this.HOST_SERVER_PATH + 'getAllOrderDetails/' + status);
   }
 
   public markDelivered(orderId: string){

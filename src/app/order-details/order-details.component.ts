@@ -14,14 +14,16 @@ export class OrderDetailsComponent {
   constructor(private productService: ProductService){}
   
   ngOnInit(): void {
-    this.getAllOrderDetails();
+    this.getAllOrderDetails(this.status);
   }
 
   allOrderDetails: MyOrderDetails[] = [];
   displayedColumns: string[] = ['Id', 'Product Name', 'Ordered by', 'Address', 'Contact No.', 'Status', 'Action'];
+  status: string = 'ALL';
 
-  public getAllOrderDetails(){
-    this.productService.getAllOrderDetails().subscribe({
+  public getAllOrderDetails(status: string){
+    this.status = status;
+    this.productService.getAllOrderDetails(this.status).subscribe({
       next: (resp)=> {console.log(resp); this.allOrderDetails = resp},
       error: (e: HttpErrorResponse) => console.log(e)
     })
@@ -29,7 +31,7 @@ export class OrderDetailsComponent {
 
   public markDelivered(orderId: string){
     this.productService.markDelivered(orderId).subscribe({
-      complete: ()=> this.getAllOrderDetails(),
+      complete: ()=> this.getAllOrderDetails(this.status),
       error: (e: HttpErrorResponse)=> console.log(e)      
     })
   }
