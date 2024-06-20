@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Product } from '../_model/product.model';
 import { OrderDetails } from '../_model/order-details.model';
+import { MyOrderDetails } from '../_model/my-orders.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -46,5 +48,17 @@ export class ProductService {
 
   public deleteCartItem(cartId: string){
     return this.httpClient.delete(this.HOST_SERVER_PATH + 'deleteCartItem/' + cartId);
+  }
+
+  public getOrderDetails(): Observable<MyOrderDetails[]>{
+    return this.httpClient.get<MyOrderDetails[]>(this.HOST_SERVER_PATH + 'getOrderDetails');
+  }
+
+  public getAllOrderDetails(status: string): Observable<MyOrderDetails[]>{
+    return this.httpClient.get<MyOrderDetails[]>(this.HOST_SERVER_PATH + 'getAllOrderDetails/' + status);
+  }
+
+  public markDelivered(orderId: string){
+    return this.httpClient.get(this.HOST_SERVER_PATH + 'orderDelivered/' + orderId);
   }
 }
