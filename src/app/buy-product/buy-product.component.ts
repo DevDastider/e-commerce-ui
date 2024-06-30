@@ -6,6 +6,7 @@ import { Product } from '../_model/product.model';
 import { ProductService } from '../_services/product.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
+declare var Razorpay: any;
 @Component({
   selector: 'app-buy-product',
   templateUrl: './buy-product.component.html',
@@ -41,6 +42,7 @@ export class BuyProductComponent implements OnInit{
     fullAddress: '',
     contactNumber: '',
     alternateContactNumber: '',
+    transactionId: '',
     orderProductQuantityList: []
   };
 
@@ -89,4 +91,51 @@ export class BuyProductComponent implements OnInit{
     );
     return grandTotal;
   }
+
+  public makePaymentAndPlaceOrder(orderForm: NgForm){
+    let billAmount = this.getGrandTotalBill();
+    this.productService.paymentTransaction(billAmount).subscribe({
+      next: (response: any)=> this.openTransactionModel(response, orderForm),
+      error: (e: HttpErrorResponse)=> console.log(e)
+    });
+  }
+  
+  private openTransactionModel(response: any, orderForm: NgForm){
+    var options = {
+      order_id: response.orderId,
+      key: response.key,
+      amount: response.amount,
+      currency: response.currency,
+      name: 'ECommerce App',
+      description: 'Payment for order',
+      image: 'https://cdn.pixabay.com/photo/2017/03/27/21/31/money-2180330_640.jpg',
+      handler: (response: any)=> {
+        if (response != null && response.razorpay_payment_id != null) {
+          this.processResponse(response, orderForm);
+        } else {
+          alert('Payment failed');
+        }
+      },
+      prefill: {
+        name: this.orderDetails.fullName,
+        email: 'dastiderdevelops@gmail.com',
+        contact: this.orderDetails.contactNumber
+      },
+      notes: {
+        address: 'Online shopping'
+      },
+      theme: {
+        color: '#c692ff'
+      }
+    }
+    
+    let razorPay = new Razorpay(options);
+    razorPay.open();
+  }
+  
+  private processResponse(response: any, orderForm: NgForm) {
+    this.orderDetails.transactionId = response.razorpay_payment_id;
+    this.placeOrder(orderForm);
+  }
 }
+

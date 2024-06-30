@@ -5,5 +5,6 @@ export interface OrderDetails{
 	fullAddress: String;
 	contactNumber: String;
 	alternateContactNumber: String;
+	transactionId: String,
     orderProductQuantityList: OrderQuantity[];
 }

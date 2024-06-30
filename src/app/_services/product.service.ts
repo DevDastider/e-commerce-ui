@@ -61,4 +61,8 @@ export class ProductService {
   public markDelivered(orderId: string){
     return this.httpClient.get(this.HOST_SERVER_PATH + 'orderDelivered/' + orderId);
   }
+
+  public paymentTransaction(amount: number){
+    return this.httpClient.get(this.HOST_SERVER_PATH + 'createTransaction/' + amount);
+  }
 }
